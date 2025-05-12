@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -62,20 +61,22 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-            child: _cachedImageFile != null
-                ? Image.file(
-                    _cachedImageFile!,
-                    fit: BoxFit.cover,
-                  )
-                : const Icon(
-                    Icons.image,
-                    size: 50,
-                    color: Colors.grey,
-                  ),
+          Center(
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+              child: _cachedImageFile != null
+                  ? Image.file(
+                      _cachedImageFile!,
+                      fit: BoxFit.cover,
+                    )
+                  : const Icon(
+                      Icons.image,
+                      size: 50,
+                      color: Colors.grey,
+                    ),
+            ),
           ),
           const SizedBox(height: 20),
           ElevatedButton(
