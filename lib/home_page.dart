@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
@@ -25,9 +26,17 @@ class _MyHomePageState extends State<MyHomePage> {
         throw Exception('Failed to download image');
       }
 
+      // compress the image
+      final compressedBytes = await FlutterImageCompress.compressWithList(
+        response.bodyBytes,
+        minHeight: 800,
+        minWidth: 800,
+        quality: 85,
+        format: CompressFormat.jpeg,
+      );
+
       // Get CACHE directory (temporary storage)
       final cacheDirectory = await getTemporaryDirectory();
-
       // create file name from url
       final fileName = 'cached_${DateTime.now().millisecondsSinceEpoch}.jpg';
       print(fileName);
@@ -36,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // save to cache
       final file = File(filePath);
-      await file.writeAsBytes(response.bodyBytes);
+      await file.writeAsBytes(compressedBytes);
 
       setState(() {
         _cachedImageFile = file;
